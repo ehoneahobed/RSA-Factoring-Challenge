@@ -1,38 +1,47 @@
-#!/usr/bin/env python3
-""" Factor numbers """
+#!/usr/bin/python3
+""" Class factor_file """
 from sys import argv
 from math import sqrt
 
 
-def open_read_file(file_name):
-    """read from file
-    add to array
-    """
-    with open(file_name, encoding="utf-8") as file:
-        lines = file.readlines()
-    number_to_factor = []
-    for line in lines:
-        number_to_factor.append(int(line))
-    return number_to_factor
+class factor_file:
+    """ init """
+
+    def __init__(self, filename):
+        """check if
+        file is not NULL
+        """
+        if filename is not None:
+            self.filename = filename
+
+    def open_read_file(self):
+        """read from file
+        add to array
+        """
+        with open(self.filename, encoding="utf-8") as file:
+            lines = file.readlines()
+        number_to_factor = []
+        for line in lines:
+            number_to_factor.append(int(line))
+        return number_to_factor
+
+    def factorial(self, n):
+        """factor each
+        n given
+        """
+        for i in range(2, n):
+            if n == ((n // i) * i):
+                print("{}={}*{}".format(n, (n // i), i))
+                break
+
+    def factor_each_n_in_lis(self):
+        """factor each
+        num in ls
+        """
+        ls = self.open_read_file()
+        for n in ls:
+            self.factorial(n)
 
 
-def find_and_times(n):
-    """factor each
-    n given
-    """
-    for i in range(2, n):
-        if n == ((n // i) * i):
-            print("{}={}*{}".format(n, (n // i), i))
-            break
-
-
-def fac_list(ls):
-    """factor each
-    num in ls
-    """
-    for i in ls:
-        find_and_times(i)
-
-
-if len(argv) == 2:
-    fac_list(open_read_file(argv[1]))
+for i in range(1, len(argv)):
+    factor_file(argv[i]).factor_each_n_in_lis()

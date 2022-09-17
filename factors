@@ -1,38 +1,33 @@
-#!/usr/bin/env python3
-""" Factor numbers """
+#!/usr/bin/python3
+"""Module that factorize as many numbers as possible
+ into a product of two smaller numbers."""
 from sys import argv
-from math import sqrt
 
 
-def open_read_file(file_name):
-    """read from file
-    add to array
-    """
-    with open(file_name, encoding="utf-8") as file:
-        lines = file.readlines()
-    number_to_factor = []
-    for line in lines:
-        number_to_factor.append(int(line))
-    return number_to_factor
+def factorize(value):
+    """"print a simple descomposition of an integer > 1"""
+    i = 2
 
+    if value < 2:
+        return
+    print()
+    print(value, "<- value-bef")
+    while value % i:
+        i += 1
+    print("{:.0f}={:.0f}*{:.0f}".format(value, value / i, i))
+    print(value, "<- value-aft")
+    print()
 
-def find_and_times(n):
-    """factor each
-    n given
-    """
-    for i in range(2, n):
-        if n == ((n // i) * i):
-            print("{}={}*{}".format(n, (n // i), i))
-            break
+if len(argv) != 2:
+    exit()
 
+try:
+    with open(argv[1]) as file:
+        line = file.readline()
 
-def fac_list(ls):
-    """factor each
-    num in ls
-    """
-    for i in ls:
-        find_and_times(i)
-
-
-if len(argv) == 2:
-    fac_list(open_read_file(argv[1]))
+        while line != "":
+            value = int(line.split('\n')[0])
+            factorize(value)
+            line = file.readline()
+except:
+    pass

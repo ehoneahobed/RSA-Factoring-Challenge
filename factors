@@ -1,24 +1,38 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
+""" Factor numbers """
 from sys import argv
 from math import sqrt
 
-def factor():
-    with open(argv[1]) as f:
-        for line in f:
-            num = int(line)
-            print("{:d}=".format(num), end="")
-            if num % 2 == 0:
-                print("{}*2".format(num//2))
-                continue
-            sqn = int(sqrt(num))
-            if sqn % 2 == 0:
-                sqn += 1
-            for i in range(3, sqn + 1, 2):
-                if num % i == 0:
-                    print("{}*{}".format(i, num//i))
-                    break
-            if num % i != 0:
-                print("{}={}*1".format(num, num))
+
+def open_read_file(file_name):
+    """read from file
+    add to array
+    """
+    with open(file_name, encoding="utf-8") as file:
+        lines = file.readlines()
+    number_to_factor = []
+    for line in lines:
+        number_to_factor.append(int(line))
+    return number_to_factor
 
 
-factor()
+def find_and_times(n):
+    """factor each
+    n given
+    """
+    for i in range(2, n):
+        if n == ((n // i) * i):
+            print("{}={}*{}".format(n, (n // i), i))
+            break
+
+
+def fac_list(ls):
+    """factor each
+    num in ls
+    """
+    for i in ls:
+        find_and_times(i)
+
+
+if len(argv) == 2:
+    fac_list(open_read_file(argv[1]))
